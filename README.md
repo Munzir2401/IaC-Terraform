@@ -67,7 +67,7 @@ module "ec2" {
 ⚠️ The Catch: Connecting EC2 to VPC
 Since the EC2 instance is launched via a separate module, it doesn't inherently "know" which VPC to belong to.
 To solve this:
-•	Outputs like vpc_id, public_subnet_id, and security_group_id are defined in the VPC module.
+•	Outputs like public_subnet_id, private_subnet_id, and security_group_id are defined in the VPC module.
 •	These are then passed as inputs to the EC2 module.
 •	This ensures EC2s are provisioned in the correct network context.
 ________________________________________
