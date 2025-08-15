@@ -54,6 +54,7 @@ resource "aws_iam_policy" "rds_connect_master" {
   })
 }
 
+# Attach the policy to the EC2 role
 resource "aws_iam_role_policy_attachment" "attach_rds_connect" {
   role       = data.terraform_remote_state.ec2.outputs.ec2_role_name
   policy_arn = aws_iam_policy.rds_connect_master.arn
