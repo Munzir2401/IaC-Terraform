@@ -7,6 +7,7 @@ This repository contains modular, reusable Terraform code to provision the follo
 - ✅ S3 bucket (for backend state or general storage)
 - ✅ VPC with public and private subnets
 - ✅ EC2 instances within the VPC
+- ✅ RDS instances within the VPC
 
 All resources are defined using **enterprise-level Terraform modules**, making the setup scalable, clean, and easy to reuse across environments (dev, staging, prod, etc.).
 
@@ -34,6 +35,11 @@ All resources are defined using **enterprise-level Terraform modules**, making t
         │   outputs.tf
         │   providers.tf
         │   variables.tf
+    ├───rds
+    │   │   main.tf
+    │   │   myvars.tfvars
+    │   │   providers.tf
+    │   │   variables.tf
             
 
 ### 🔧 Modules
@@ -41,6 +47,7 @@ All resources are defined using **enterprise-level Terraform modules**, making t
 - ../modules/s3/ – Creates an S3 bucket with configurable name and ACL.
 - ../modules/vpc/ – Builds a VPC with public and private subnets, internet gateway, route tables, etc.
 - ../modules/ec2/ – Launches EC2 instances within subnets (using outputs from the VPC module).
+- ../modules/rds/ – Launches RDS instances within subnets (using outputs from the VPC module and role from ec2 module).
 
 ---
 
@@ -84,8 +91,7 @@ terraform apply
 ________________________________________
 
 📌 Next Steps (Work in Progress)
-•	Add IAM module
-•	Add RDS
-
+•	Add IAM module (Now Added)
+•	Add RDS (Now Added)
 
 
