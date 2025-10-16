@@ -13,7 +13,8 @@ All resources are defined using **enterprise-level Terraform modules**, making t
 
 ---
 
-``` ## 📁 Project Structure
+## 📁 Project Structure
+```
 ├── appn
 │ ├── main.tf
 │ └── providers.tf
