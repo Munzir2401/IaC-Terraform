@@ -13,7 +13,7 @@ All resources are defined using **enterprise-level Terraform modules**, making t
 
 ---
 
-## 📁 Project Structure
+``` ## 📁 Project Structure
 ├── appn
 │ ├── main.tf
 │ └── providers.tf
@@ -39,6 +39,7 @@ All resources are defined using **enterprise-level Terraform modules**, making t
 ├── myvars.tfvars
 ├── providers.tf
 └── variables.tf
+```
             
 
 ### 🔧 Modules
