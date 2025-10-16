@@ -14,32 +14,31 @@ All resources are defined using **enterprise-level Terraform modules**, making t
 ---
 
 ## 📁 Project Structure
-
-├───appn
-│   │   main.tf
-│   │   providers.tf
-└───modules
-    ├───ec2
-    │   │   main.tf
-    │   │   myvars.tfvars
-    │   │   providers.tf
-    │   │   variables.tf
-    ├───s3
-    │   │   main.tf
-    │   │   myvars.tfvars
-    │   │   providers.tf
-    │   │   variables.tf
-    └───vpc
-        │   main.tf
-        │   myvars.tfvars
-        │   outputs.tf
-        │   providers.tf
-        │   variables.tf
-    ├───rds
-    │   │   main.tf
-    │   │   myvars.tfvars
-    │   │   providers.tf
-    │   │   variables.tf
+├── appn
+│   ├── main.tf
+│   └── providers.tf
+└── modules
+    ├── ec2
+    │   ├── main.tf
+    │   ├── myvars.tfvars
+    │   ├── providers.tf
+    │   └── variables.tf
+    ├── s3
+    │   ├── main.tf
+    │   ├── myvars.tfvars
+    │   ├── providers.tf
+    │   └── variables.tf
+    ├── vpc
+    │   ├── main.tf
+    │   ├── myvars.tfvars
+    │   ├── outputs.tf
+    │   ├── providers.tf
+    │   └── variables.tf
+    └── rds
+        ├── main.tf
+        ├── myvars.tfvars
+        ├── providers.tf
+        └── variables.tf
             
 
 ### 🔧 Modules
