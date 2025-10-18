@@ -38,7 +38,7 @@ variable "instance_type" {
 
 variable "key_pair_name" {
   type    = string
-  default = "your-key-pair"
+  default = "your-key-pair-name"
 }
 
 variable "allowed_ssh_cidr" {
@@ -75,7 +75,7 @@ variable "context_paths" {
   default = {
     cars   = "/cars*"
     bikes  = "/bikes*"
-    trucks = "/trucks*"
+    /*trucks = "/trucks*"*/
   }
 }
 
@@ -121,6 +121,17 @@ variable "per_tg_asg_defaults" {
   }
 }
 
+variable "per_tg_asg_config" {
+  description = "Specific override configurations for path-based ASGs. Any path defined here will use these settings instead of the defaults."
+  type = map(object({
+    min_size         = number
+    desired_capacity = number
+    max_size         = number
+    cpu_target_value = number
+  }))
+  default = {}
+}
+
 #########################
 # Bootstrapping
 #########################
@@ -147,4 +158,3 @@ variable "user_data_install" {
               systemctl start nginx
             EOF
 }
-
