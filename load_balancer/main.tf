@@ -11,7 +11,7 @@ locals {
   asg_subnets = length(var.asg_subnets) > 0 ? var.asg_subnets : var.alb_subnets
 }
 
-# AMI data source
+# ✅ Corrected AMI data source
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
@@ -90,7 +90,7 @@ resource "aws_lb" "alb" {
   load_balancer_type         = "application"
   subnets                    = var.alb_subnets
   security_groups            = [aws_security_group.alb_sg.id]
-  enable_deletion_protection = false  # Set to true in production
+  enable_deletion_protection = false  #Set to true in production
 
   tags = {
     Name = var.alb_name
@@ -304,12 +304,13 @@ resource "aws_launch_template" "per_tg_lt" {
 }
 
 resource "aws_autoscaling_group" "per_tg_asg" {
-  for_each = aws_lb_target_group.tg
-
-  name                      = "${var.alb_name}-${each.key}-asg"
-  min_size                  = var.per_tg_asg_defaults.min_size
-  desired_capacity          = var.per_tg_asg_defaults.desired_capacity
-  max_size                  = var.per_tg_asg_defaults.max_size
+  for_each = var.context_paths
+  name     = "${var.alb_name}-${each.key}-asg"
+  
+  # Use a lookup to get specific config, or fall back to defaults
+  min_size         = lookup(var.per_tg_asg_config, each.key, var.per_tg_asg_defaults).min_size
+  desired_capacity = lookup(var.per_tg_asg_config, each.key, var.per_tg_asg_defaults).desired_capacity
+  max_size         = lookup(var.per_tg_asg_config, each.key, var.per_tg_asg_defaults).max_size
   health_check_type         = "ELB"
   health_check_grace_period = 60
 
@@ -329,16 +330,17 @@ resource "aws_autoscaling_group" "per_tg_asg" {
 }
 
 resource "aws_autoscaling_policy" "per_tg_target_tracking" {
-  for_each               = aws_autoscaling_group.per_tg_asg
+  for_each               = var.context_paths
   name                   = "${var.alb_name}-${each.key}-cpu-policy"
-  autoscaling_group_name = each.value.name
+  autoscaling_group_name = aws_autoscaling_group.per_tg_asg[each.key].name
   policy_type            = "TargetTrackingScaling"
 
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
-    target_value = var.per_tg_asg_defaults.cpu_target_value
+    # Use a lookup to get the specific CPU target value
+    target_value = lookup(var.per_tg_asg_config, each.key, var.per_tg_asg_defaults).cpu_target_value
   }
 }
 

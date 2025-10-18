@@ -7,9 +7,9 @@ terraform {
   }
 
 backend "s3" {
-    bucket         = "your-bucket-name"
-    key            = "path-to-key"
-    region         = "your-aws-region"
+    bucket         = "munzir24"
+    key            = "load-balancer/terraform/modular/tf.state"
+    region         = "ap-south-1"
     use_lockfile   = true
     encrypt        = true
   }
@@ -17,5 +17,5 @@ backend "s3" {
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "your-aws-region"
+  region = "ap-south-1"
 }
