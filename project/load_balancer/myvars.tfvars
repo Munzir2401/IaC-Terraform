@@ -1,3 +1,6 @@
+# what VPC to deploy into
+vpc_id = "vpc-xxxxxxxxxxxxxxxx"
+
 # Must give 2 or more subnets in different AZs
 alb_subnets = [
   "subnet-xxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxx"
@@ -17,6 +20,10 @@ key_pair_name  = "your-key-pair-name"
 allowed_ssh_cidr = "your-ip-address/32" # restrict SSH access
 
 alb_name = "prod-my-alb"
+
+to_port = 80
+conn_protocol = "http"
+target_type = "instance"
 
 # You can override context_paths here if you like
 context_paths = {
@@ -52,3 +59,59 @@ instance_mapping = {
   "static-home-1" = "homepage"
   # "static-cars-1" = "cars"
 }
+
+homepage_asg = {
+  min_size         = 1
+  desired_capacity = 2
+  max_size         = 3
+  cpu_target_value = 50
+}
+
+per_tg_asg_defaults = {
+  min_size         = 1
+  desired_capacity = 1
+  max_size         = 2
+  cpu_target_value = 50
+}
+
+per_tg_asg_config = {
+  "cars" = {
+    min_size         = 2
+    desired_capacity = 2
+    max_size         = 4
+    cpu_target_value = 40
+  }
+  /*"bikes" = {
+    min_size         = 1
+    desired_capacity = 2
+    max_size         = 3
+    cpu_target_value = 60
+  }
+  "trucks" = {
+    min_size         = 1
+    desired_capacity = 2
+    max_size         = 3
+    cpu_target_value = 70
+  }*/
+}
+
+user_data_install = "<<-EOF
+              #!/bin/bash
+              # Bootstrap: install nginx, create default page, and create path-based pages
+              yum update -y
+              amazon-linux-extras enable nginx1
+              yum install -y nginx
+              
+              # Create the default homepage
+              echo "<html><body><h1>Welcome from Homepage: $(curl -s http://169.254.169.254/latest/meta-data/instance-id)</h1></body></html>" > /usr/share/nginx/html/index.html
+
+              # Create directories and index files for each context path
+              # This ensures health checks for /cars, /bikes, etc. will pass
+              for path in cars bikes trucks; do
+                mkdir -p /usr/share/nginx/html/$path
+                echo "<html><body><h1>Welcome from $path: $(curl -s http://169.254.169.254/latest/meta-data/instance-id)</h1></body></html>" > /usr/share/nginx/html/$path/index.html
+              done
+
+              systemctl enable nginx
+              systemctl start nginx
+            EOF
