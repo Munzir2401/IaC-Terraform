@@ -26,7 +26,8 @@ IAM Module → Manages roles and policies required for other resources.
 Load Balancer Module (ALB + Auto Scaling) →
 Handles path-based routing, auto-healing, and CPU-driven auto scaling for multiple services (like /cars, /bikes, etc.) behind a single ALB.
 
-```[ User Traffic ]
+```
+[ User Traffic ]
        |
        v
 [ AWS Application Load Balancer ]
@@ -47,7 +48,8 @@ Independent CPU-based scaling policy
 
 Dedicated Target Group behind the ALB
 
-```├── appn
+```
+├── appn
 │   ├── main.tf
 │   └── providers.tf
 └── modules
@@ -105,29 +107,35 @@ Instances use a bootstrap script (user data) that installs Nginx and serves a un
 
 🧪 How to Deploy
 1️ Clone the repository
-```git clone https://github.com/Munzir2401/IaC-Terraform.git
+```
+git clone https://github.com/Munzir2401/IaC-Terraform.git
 cd IaC-Terraform/appn
 ```
 2️ Configure your environment
 
 In each module or in your main project directory, create a myvars.tfvars file.
 At minimum, define:
-```alb_subnets  = ["subnet-abc123", "subnet-def456"]
+```
+alb_subnets  = ["subnet-abc123", "subnet-def456"]
 asg_subnets  = ["subnet-xyz123", "subnet-uvw456"]
 key_pair_name = "my-keypair"
 ```
 3️ Initialize Terraform
-```terraform init
+```
+terraform init
 ```
 4️ Plan your deployment
-```terraform plan
+```
+terraform plan
 ```
 5️ Apply to build infrastructure
-```terraform apply
+```
+terraform apply
 ```
 After successful deployment, Terraform outputs your ALB DNS name.
 Visit:
-```http://<alb-dns-name>/
+```
+http://<alb-dns-name>/
 http://<alb-dns-name>/cars
 http://<alb-dns-name>/bikes
 ```
@@ -136,7 +144,8 @@ Each path routes to its respective backend EC2 fleet.
 🧩 Customizing Path-Based Routing
 
 You can easily add or remove backend services by editing your variable file:
-```context_paths = {
+```
+context_paths = {
   cars  = "/cars*"
   bikes = "/bikes*"
   trucks = "/trucks*"
@@ -155,7 +164,8 @@ When CPU exceeds the threshold (e.g., 40%), ASG scales out.
 When CPU remains low, ASG scales back in.
 
 You can manually trigger scaling for testing:
-```stress --cpu 2 --timeout 600
+```
+stress --cpu 2 --timeout 600
 ```
 CloudWatch logs and scaling activities can be observed in the AWS Console:
 
