@@ -6,9 +6,9 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "munzir24"
+    bucket = "your-bucket-name"
     # The bucket name must be globally unique across all AWS accounts
-    key    = "modules/application/terraform.tfstate"
+    key    = "your-key"
     encrypt = true
     region = "ap-south-1"
     use_lockfile = true
