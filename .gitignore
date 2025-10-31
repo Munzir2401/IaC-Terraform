@@ -1,0 +1,16 @@
+# Ignore all Terraform state and lock files
+**/.terraform/*
+**/.terraform.lock.hcl
+**/*.tfstate
+**/*.tfstate.*
+
+# Ignore all variable definition files
+**/*.tfvars
+**/*.tfvars.json
+
+# Ignore crash logs
+**/crash.log
+**/crash.*.log
+
+# Ignore any JS files if not needed
+**/*.js
