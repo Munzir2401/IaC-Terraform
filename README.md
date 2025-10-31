@@ -62,7 +62,7 @@ Dedicated Target Group behind the ALB
     ├── s3/
     │   ├── main.tf
     │   ├── variables.tf
-    ├── s3_log_bucket
+    ├── s3_log_bucket/
     │   ├── main.tf
     │   ├── variables.tf
 	│   ├── outputs.tf
@@ -78,7 +78,7 @@ Dedicated Target Group behind the ALB
 	│   ├── data.tf
 	│   ├── createusers.sql
 	│   ├── auth.sh
-    └── load_balancer
+    └── load_balancer/
         ├── main.tf
         ├── variables.tf
         ├── outputs.tf
