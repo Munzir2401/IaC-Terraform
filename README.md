@@ -52,7 +52,7 @@ Dedicated Target Group behind the ALB
 ├── appn
 │   ├── main.tf
 │   └── providers.tf
-│   └── variabless.tf
+│   └── variables.tf
 │   └── outputs.tf
 └── modules
     ├── vpc/
