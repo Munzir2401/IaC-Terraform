@@ -115,7 +115,7 @@ cd IaC-Terraform/appn
 ```
 2️ Configure your environment
 
-In each module or in your main project directory, create a myvars.tfvars file.
+In each module or in your main project directory, create a .tfvars file.
 At minimum, define:
 ```
 alb_subnets  = ["subnet-abc123", "subnet-def456"]
