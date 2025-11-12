@@ -1,29 +1,29 @@
-🌐 Terraform Modular AWS Infrastructure with Dynamic Load Balancing & Auto Scaling
+Terraform Modular AWS Infrastructure with Dynamic Load Balancing & Auto Scaling
 
-This repository contains a complete, modular, and production*-grade Terraform setup for provisioning AWS infrastructure — from foundational networking (VPC, EC2, RDS, S3, IAM) to advanced path-based routing and auto-scaling using an Application Load Balancer (ALB).
+This repository contains a complete, modular, and production-grade Terraform setup for provisioning AWS infrastructure - from foundational networking (VPC, EC2, RDS, S3, IAM) to advanced path-based routing and auto-scaling using an Application Load Balancer (ALB).
 
-It’s designed for scalability, reusability, and clarity — ideal for both learning and real-world deployment.
+It’s designed for scalability, reusability, and clarity - ideal for both learning and real-world deployment.
 
-🏗️ Architecture Overview
+Architecture Overview
 
 The architecture is built using independent, reusable Terraform modules.
 Each module defines one major AWS service, making the setup flexible and easy to extend.
 
-🧩 Core Modules:
+Core Modules:
 
-VPC Module → Creates a VPC with public & private subnets, route tables, and Internet Gateway.
+VPC Module - Creates a VPC with public & private subnets, route tables, and Internet Gateway.
 
-S3 Module → Provisions S3 buckets (for backend state or general storage).
+S3 Module - Provisions S3 buckets (for backend state or general storage).
 
-EC2 Module → Launches EC2 instances in specified subnets
+EC2 Module - Launches EC2 instances in specified subnets
 
-RDS Module → Deploys RDS instances within the VPC.
+RDS Module - Deploys RDS instances within the VPC.
 
-IAM Module → Manages roles and policies required for other resources.
+IAM Module - Manages roles and policies required for other resources.
 
-⚙️ Advanced Module:
+Advanced Module:
 
-Load Balancer Module (ALB + Auto Scaling) →
+Load Balancer Module (ALB + Auto Scaling) -
 Handles path-based routing, auto-healing, and CPU-driven auto scaling for multiple services (like /cars, /bikes, etc.) behind a single ALB.
 
 ```
@@ -83,7 +83,7 @@ Dedicated Target Group behind the ALB
         ├── variables.tf
         ├── outputs.tf
 ```
-⚙️ How It Works
+How It Works
 
 Network Foundation:
 The VPC module creates isolated public and private subnets with the required route tables and gateways.
@@ -101,13 +101,13 @@ Load Balancing & Auto Scaling:
 
 An Application Load Balancer inspects each request’s path.
 
-Routes traffic to the correct Target Group (e.g., /cars → Cars ASG).
+Routes traffic to the correct Target Group (e.g., /cars -> Cars ASG).
 
 Each ASG scales dynamically based on its average CPU utilization.
 
 Instances use a bootstrap script (user data) that installs Nginx and serves a unique web page for each path.
 
-🧪 How to Deploy
+How to Deploy
 1️ Clone the repository
 ```
 git clone https://github.com/Munzir2401/IaC-Terraform.git
@@ -143,7 +143,7 @@ http://<alb-dns-name>/bikes
 ```
 Each path routes to its respective backend EC2 fleet.
 
-🧩 Customizing Path-Based Routing
+Customizing Path-Based Routing
 
 You can easily add or remove backend services by editing your variable file:
 ```
@@ -155,7 +155,7 @@ context_paths = {
 ```
 Terraform automatically creates the required Target Groups, Listener Rules, and Auto Scaling Groups for each entry.
 
-📈 Auto Scaling Behavior
+Auto Scaling Behavior
 
 Each backend fleet is independently scalable based on CPU utilization:
 
@@ -171,9 +171,9 @@ stress --cpu 2 --timeout 600
 ```
 CloudWatch logs and scaling activities can be observed in the AWS Console:
 
-EC2 → Auto Scaling Groups → Activity
+EC2 -> Auto Scaling Groups -> Activity
 
-CloudWatch → Alarms → Triggered Alarms
+CloudWatch -> Alarms -> Triggered Alarms
 ```
 | Category       | Technology                      |
 | -------------- | ------------------------------- |
@@ -186,7 +186,7 @@ CloudWatch → Alarms → Triggered Alarms
 | Monitoring     | CloudWatch                      |
 | Web Server     | Nginx                           |
 ```
-🚀 Future Enhancements
+Future Enhancements
 
 Add CI/CD pipeline integration (e.g., Jenkins or GitHub Actions)
 
@@ -196,7 +196,7 @@ Extend monitoring with custom CloudWatch metrics
 
 Add centralized logging with CloudWatch Logs
 
-🧠 Summary
+Summary
 
 This repository demonstrates:
 
@@ -208,4 +208,4 @@ Dynamic routing and auto-scaling per microservice path
 
 A clean, extensible foundation for any scalable cloud application
 
-Build once, reuse everywhere — true DevOps practice in action. 🚀
+Build once, reuse everywhere — true DevOps practice in action.
